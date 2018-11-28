@@ -12,6 +12,7 @@
   "dependencies": {
     "blockstack": "^18.1.0",
     "element-ui": "^2.4.11",
+    "mavon-editor": "^2.6.17",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
