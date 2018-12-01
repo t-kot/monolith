@@ -39,8 +39,12 @@ export default {
   methods: {
     onSaveBody() {
       const filepath = 'posts1.json'
+      const blockstack = global.blockstack
 
-      this.blockstack.putFile(filepath, )
+      blockstack.putFile(filepath, JSON.stringify({
+        title: this.title,
+        body: this.body,
+      }))
     }
   }
 }

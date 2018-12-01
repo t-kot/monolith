@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <router-view/>
+    <el-container>
+      <el-header>
+        header
+      </el-header>
+      <el-main>
+        <router-view/>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -8,23 +15,8 @@
 export default {
   name: 'App',
   mounted () {
-    // const blockstack = this.blockstack
-    // if (blockstack.isUserSignedIn()) {
-    //   const userData = blockstack.loadUserData()
-    //   this.user = new blockstack.Person(userData.profile)
-    //   console.log(userData)
-    // } else if (blockstack.isSignInPending()) {
-    //   blockstack.handlePendingSignIn().then(userdata => {
-    //     window.location = window.location.origin
-    //   })
-    // }
+    this.$store.dispatch('init')
   },
-  data () {
-    return {
-      blockstack: window.blockstack,
-      user: null,
-    }
-  }
 }
 </script>
 

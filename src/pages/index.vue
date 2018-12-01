@@ -17,10 +17,7 @@ export default {
   },
   methods: {
     handleLogin() {
-      const redirectURI = `${window.location.origin}`
-      const manifestURI = `${window.location.origin}/static/manifest.json`
-      const scope = ['store_write']
-      blockstack.redirectToSignIn(redirectURI, manifestURI, scope)
+      this.$store.dispatch('authenticate')
     },
   }
 }
