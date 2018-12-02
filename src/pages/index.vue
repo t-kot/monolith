@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+
     <el-button type='primary' round @click='handleLogin()'>Login</el-button>
   </div>
 </template>
@@ -10,9 +11,14 @@ const blockstack = require('blockstack')
 
 export default {
   name: 'Top',
+  mounted() {
+    if (this.$store.getters.isAuthenticated) {
+      this.$router.replace('/posts')
+    }
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Markdown app by blockstack'
     }
   },
   methods: {
