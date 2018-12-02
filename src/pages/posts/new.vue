@@ -20,7 +20,7 @@
           </el-form>
         </el-col>
         <el-col :span=2 class='button'>
-          <el-button primary @click='onSaveBody'>Save</el-button>
+          <el-button primary @click="createPost">Save</el-button>
         </el-col>
       </el-row>
       <mavon-editor v-model='body' language='en'></mavon-editor>
@@ -30,21 +30,34 @@
 
 <script>
 export default {
-  data() {
-    return {
-      title: '',
-      body: '',
+  computed: {
+    title: {
+      get() {
+        return this.$store.state.postForm.title
+      },
+      set (val) {
+        this.$store.commit('updatePostForm', { attr: 'title', val })
+      }
+    },
+    body: {
+      get() {
+        return this.$store.state.postForm.body
+      },
+      set (val) {
+        this.$store.commit('updatePostForm', { attr: 'body', val })
+      }
     }
   },
   methods: {
-    onSaveBody() {
-      const filepath = 'posts1.json'
-      const blockstack = global.blockstack
-
-      blockstack.putFile(filepath, JSON.stringify({
-        title: this.title,
-        body: this.body,
-      }))
+    async createPost() {
+      try {
+        const post = await this.$store.dispatch('createPost')
+        this.$message.info('作成しました')
+        this.$router.push(`/posts/${post.id}`)
+      } catch (e) {
+        console.error(e)
+        this.$message.error('失敗しました')
+      }
     }
   }
 }

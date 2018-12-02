@@ -4,6 +4,7 @@ import ElementUI from 'element-ui'
 import mavonEditor from 'mavon-editor'
 import Top from '@/pages/index'
 import PostIndex from '@/pages/posts/index'
+import PostShow from '@/pages/posts/show'
 import PostNew from '@/pages/posts/new'
 import PostEdit from '@/pages/posts/edit'
 
@@ -29,6 +30,11 @@ const router = new Router({
     {
       path: '/posts/new',
       component: PostNew,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/posts/:id',
+      component: PostShow,
       meta: { requiresAuth: true },
     },
     {
