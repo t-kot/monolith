@@ -1,6 +1,6 @@
 {
   "name": "Monolith",
-  "start_url": "http://localhost:8080",
+  "start_url": "https://monolith-bf856.firebaseapp.com",
   "description": "A simple markdown app build on blockstack",
   "icons": [{
     "src": "http://blockstack-todos.appartisan.com/logo.png",

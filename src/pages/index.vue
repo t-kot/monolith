@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     handleLogin() {
-      this.$store.dispatch('authenticate')
+      this.$store.dispatch('signIn')
     },
   }
 }
