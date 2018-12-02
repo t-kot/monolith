@@ -1,6 +1,12 @@
 {
   "hosting": {
     "public": "dist",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
     "headers": [{
       "source" : "/static/manifest.json",
       "headers" : [{
