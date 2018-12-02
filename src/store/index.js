@@ -33,6 +33,15 @@ const createStore = () => {
       },
       findPost: (state) => (id) => {
         return state.posts.find(post => post.id === id)
+      },
+      recentPosts(state) {
+        return state.posts.sort((p1, p2) => {
+          const a = p1.createdAt
+          const b = p2.createdAt
+          if (a < b) return 1
+          if (a > b) return -1
+          return 0
+        })
       }
     },
     mutations: {
@@ -51,22 +60,26 @@ const createStore = () => {
       addPost(state, post) {
         state.posts.push(post)
       },
+      updatePost(state, post) {
+        const idx = this.state.posts.findIndex(p => p.id === post.id)
+        this.state.posts.splice(idx, 1, post)
+      },
       deletePost(state, post) {
         const idx = state.posts.findIndex(p => p.id === post.id)
-        state.posts.splice(state.posts.indexOf(idx), 1)
+        state.posts.splice(idx, 1)
       }
     },
     actions: {
-      init({ commit }) {
+      init({ commit, dispatch }) {
         if (blockstack.isUserSignedIn()) {
           const userData = blockstack.loadUserData()
           const person = new blockstack.Person(userData.profile)
           commit('setAuthPerson', person)
           commit('setAuthStatus', 'signin')
+          dispatch('loadPosts')
         } else if (blockstack.isSignInPending()) {
           commit('setAuthStatus', 'pending')
           blockstack.handlePendingSignIn().then(userdata => {
-            debugger
             window.location = window.location.origin
           })
         }
@@ -80,17 +93,19 @@ const createStore = () => {
       signOut({ commit }) {
         blockstack.signUserOut(window.location.href)
       },
-      loadPosts({ commit }) {
-        blockstack.getFile(POSTS_FILE).then(postsText => {
-          const posts = JSON.parse(postsText || '[]')
-          commit('setPosts', posts)
-        })
+      async loadPosts({ commit }) {
+        const postsText = await blockstack.getFile(POSTS_FILE)
+        const posts = JSON.parse(postsText || '[]')
+        commit('setPosts', posts)
       },
       createPost({ commit, dispatch }) {
+        const d = new Date()
         const post = {
           title: this.state.postForm.title,
           body: this.state.postForm.body,
           id: uuidv4(),
+          createdAt: d.toISOString(),
+          updatedAt: d.toISOString(),
         }
         commit('addPost', post)
         dispatch('syncPosts')
@@ -103,6 +118,13 @@ const createStore = () => {
       },
       syncPosts({ commit }) {
         blockstack.putFile(POSTS_FILE, JSON.stringify(this.state.posts))
+      },
+      updatePost({ commit, dispatch }, post) {
+        const d = new Date()
+        post.createdAt = d.toISOString()
+
+        commit('updatePost', post)
+        dispatch('syncPosts')
       }
     }
   })

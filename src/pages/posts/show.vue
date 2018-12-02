@@ -1,9 +1,15 @@
 <template>
   <div class="posts-show">
-    <div class="post-detail" v-if='post'>
+    <div class="post-header">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/posts' }">記事一覧</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ post.title }}</el-breadcrumb-item>
+      </el-breadcrumb>
       <h1 class='post-title'>{{ post.title }}</h1>
-      <div class="post-body" v-html='postBody'>
-      </div>
+      <p class="created-at">{{ post.createdAt }}</p>
+    </div>
+    <div class="post-body" v-html='postBody'>
+    </div>
     </div>
   </div>
 </template>
@@ -12,22 +18,18 @@
 import markdownIt from '../../plugins//markdown-it'
 import hljs from '../../plugins/hljs'
 
-const loadScript = (src) => {
-  const head = document.querySelector('head')
-  const script = document.createElement('script')
-  script.src = src
-  head.appendChild(script)
-}
-
 export default {
   mounted() {
-    this.$store.dispatch('loadPosts')
     window.hljs = hljs
   },
   computed: {
     post() {
       const id = this.$route.params.id
-      return this.$store.getters.findPost(id)
+      const _post = this.$store.getters.findPost(id)
+      if (!_post) {
+        return { title: '', body: '' }
+      }
+      return _post
     },
     postBody() {
       return markdownIt.render(this.post.body)

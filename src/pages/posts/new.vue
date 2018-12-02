@@ -8,6 +8,10 @@
 <template>
   <el-container>
     <el-header>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/posts' }">記事一覧</el-breadcrumb-item>
+        <el-breadcrumb-item>新規作成</el-breadcrumb-item>
+      </el-breadcrumb>
       <h1>New Post</h1>
     </el-header>
     <el-main>
