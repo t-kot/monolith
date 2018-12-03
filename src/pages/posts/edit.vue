@@ -3,25 +3,31 @@
   text-align: right;
   margin: 0 0 2rem;
 }
+.markdown-body {
+  min-height: calc(100vh - 300px) !important;
+}
 </style>
+
 
 <template>
   <div class="edit">
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/posts' }">記事一覧</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ post.title }}</el-breadcrumb-item>
-    </el-breadcrumb>
-    <div class="edit-header">
-      <div class="header-control">
-        <el-button @click='updatePost'>保存</el-button>
+    <div class="container">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/posts' }">記事一覧</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ post.title }}</el-breadcrumb-item>
+      </el-breadcrumb>
+      <div class="edit-header">
+        <div class="header-control">
+          <el-button @click='updatePost' type='primary'>保存</el-button>
+        </div>
+        <el-form>
+          <el-form-item>
+            <el-input placeholder="title" v-model='title'></el-input>
+          </el-form-item>
+        </el-form>
       </div>
-      <el-form>
-        <el-form-item>
-          <el-input placeholder="title" v-model='title'></el-input>
-        </el-form-item>
-      </el-form>
+      <mavon-editor v-model='body' language='en'></mavon-editor>
     </div>
-    <mavon-editor v-model='body' language='en'></mavon-editor>
   </div>
 </template>
 

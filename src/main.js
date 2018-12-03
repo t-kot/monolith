@@ -9,7 +9,9 @@ require('element-ui/lib/theme-chalk/index.css')
 import 'mavon-editor/dist/css/index.css'
 require('mavon-editor/src/lib/css/markdown.css')
 import 'highlight.js/styles/github.css'
+import moment from 'moment'
 global.blockstack = blockstack
+moment.locale('ja')
 
 Vue.config.productionTip = false
 

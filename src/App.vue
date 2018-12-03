@@ -8,19 +8,44 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+}
 </style>
 
-<style scoped>
-.header {
-  border-bottom: 1px solid #eee;
-  padding: 5px 10px;
-}
+<style lang='scss' scoped>
 .header-signin {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+
+  .right-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .avatar {
+    margin-right: 1rem;
+  }
+  .signout {
+    text-decoration: none;
+    color: #aaa;
+  }
 }
 .header-signin .avatar {
   border: 1px solid #eee;
   border-radius: 50%;
+}
+.header-guest {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
 }
 </style>
 
@@ -29,12 +54,20 @@ body {
   <div id="app">
     <el-container>
       <el-header class='header' height='auto'>
-        <div class="header-signin" v-if='this.$store.getters.isAuthenticated'>
-          <img class='avatar' :src='$store.getters.authUser.imageUrl' alt="avatar" :width='48' :height='48'>
-          <a href="#" @click="$store.dispatch('signOut')">sign out</a>
-        </div>
-        <div class="header-guest" v-else>
-          <a href="#" @click="$store.dispatch('signIn')">sign in</a>
+        <div class="container">
+          <div class="header-signin" v-if='this.$store.getters.isAuthenticated'>
+            <h1 class='title'>Monolith</h1>
+            <div class="right-menu">
+              <img class='avatar' :src='$store.getters.authUser.imageUrl' alt="avatar" :width='40' :height='40'>
+              <a class='signout' href="#" @click="$store.dispatch('signOut')">sign out</a>
+            </div>
+          </div>
+          <div class="header-guest" v-else>
+            <h1 class='title'>Monolith</h1>
+            <div class="right-menu">
+              <el-button type='primary' @click="$store.dispatch('signIn')">ログイン</el-button>
+            </div>
+          </div>
         </div>
       </el-header>
       <el-main>

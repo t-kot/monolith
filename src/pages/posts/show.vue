@@ -1,15 +1,16 @@
 <template>
   <div class="posts-show">
-    <div class="post-header">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/posts' }">記事一覧</el-breadcrumb-item>
-        <el-breadcrumb-item>{{ post.title }}</el-breadcrumb-item>
-      </el-breadcrumb>
-      <h1 class='post-title'>{{ post.title }}</h1>
-      <p class="created-at">{{ post.createdAt }}</p>
-    </div>
-    <div class="post-body" v-html='postBody'>
-    </div>
+    <div class="container">
+      <div class="post-header">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/posts' }">記事一覧</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ post.title }}</el-breadcrumb-item>
+        </el-breadcrumb>
+        <h1 class='post-title'>{{ post.title }}</h1>
+        <p class="created-at">{{ moment(post.createdAt).format('lll') }}</p>
+      </div>
+      <div class="post-body" v-html='postBody'>
+      </div>
     </div>
   </div>
 </template>
@@ -17,6 +18,7 @@
 <script>
 import markdownIt from '../../plugins//markdown-it'
 import hljs from '../../plugins/hljs'
+import moment from 'moment'
 
 export default {
   mounted() {
@@ -34,6 +36,9 @@ export default {
     postBody() {
       return markdownIt.render(this.post.body)
     }
+  },
+  methods: {
+    moment,
   }
 }
 </script>

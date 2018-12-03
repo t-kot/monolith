@@ -7,7 +7,7 @@
     margin: 0;
   }
   .list-control {
-    width: 100px;
+    // width: 100px;
   }
 }
 .post-item {
@@ -21,33 +21,30 @@
       margin: 0;
     }
   }
-
-  .post-control {
-    width: 160px;
-  }
 }
 
 </style>
 
 <template>
-  <div class="post-list">
-    <div class="post-list-header">
-      <h1>Post List</h1>
-      <div class="list-control">
-        <el-button @click="$router.push('/posts/new')" round type='primary'>Add</el-button>
-      </div>
-    </div>
-
-    <div class="posts">
-      <div class="post-item" v-for='post in posts' :key='post.id'>
-        <div class="post-box">
-          <h1>
-            <router-link :to="'/posts/' + post.id">{{ post.title }}</router-link>
-          </h1>
+  <div class="pages-posts-index">
+    <div class="container">
+      <div class="post-list-header">
+        <h1>記事一覧</h1>
+        <div class="list-control">
+          <el-button @click="$router.push('/posts/new')" type='primary'>作成</el-button>
         </div>
-        <div class="post-control">
-          <el-button type="primary" @click="editPost(post)">編集</el-button>
-          <el-button type="danger" @click="deletePost(post)">削除</el-button>
+      </div>
+      <div class="posts">
+        <div class="post-item" v-for='post in posts' :key='post.id'>
+          <div class="post-box">
+            <h1>
+              <router-link :to="'/posts/' + post.id">{{ post.title }}</router-link>
+            </h1>
+          </div>
+          <div class="post-control">
+            <el-button type="primary" icon="el-icon-edit" circle @click="editPost(post)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" @click="deletePost(post)" circle></el-button>
+          </div>
         </div>
       </div>
     </div>

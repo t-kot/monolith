@@ -1,8 +1,27 @@
-<template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+<style lang='scss' scoped>
+.hero {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
 
-    <el-button type='primary' round @click='handleLogin()'>Login</el-button>
+  .main-text {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  .description {
+    font-size: 1.4rem;
+  }
+}
+</style>
+
+<template>
+  <div class="pages-index">
+    <div class="container">
+      <div class="hero">
+        <h1 class='main-text'>たいせつなデータを自分の手元に</h1>
+        <p class='description'>重要なデータをクラウドに預けず自分で管理できる情報管理ツール</p>
+      </div>
+    </div>
   </div>
 </template>
 

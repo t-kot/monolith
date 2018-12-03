@@ -95,8 +95,13 @@ const createStore = () => {
       },
       async loadPosts({ commit }) {
         const postsText = await blockstack.getFile(POSTS_FILE)
-        const posts = JSON.parse(postsText || '[]')
-        commit('setPosts', posts)
+        if (postsText) {
+          const posts = JSON.parse(postsText || '[]')
+          commit('setPosts', posts)
+        } else {
+          const posts = []
+          commit('setPosts', posts)
+        }
       },
       createPost({ commit, dispatch }) {
         const d = new Date()
